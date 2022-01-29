@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.city.forum.mapper.PostMapper">
+
+    <!-- 获取所有的帖子   -->
+    <select id="getAllPorts" resultType="com.city.forum.model.vo.Postvo">
+        select u.user_id,u.user_nickname,u.user_avatar,p.post_id,p.post_time,p.post_content,p.post_count,p.post_comment,p.file_type,p.file_href
+        from post p inner join user u on p.user_id = u.user_id
+        order by p.post_time desc
+    </select>
+
+
+    <!-- 获取我点赞的帖子   -->
+    <select id="getParisePorts" resultType="com.city.forum.model.vo.Postvo">
+        select
+        u.user_id,u.user_nickname,u.user_avatar,p.post_id,p.post_time,p.post_content,p.post_count,p.post_comment,p.file_type,p.file_href
+        from post p inner join user u on p.user_id = u.user_id
+        INNER JOIN praise pr on p.post_id = pr.post_id
+        where pr.user_id = #{userId}
+        and pr.praise_status = 1
+        order by p.post_time desc
+    </select>
+
+    <!--    获取我关注的帖子-->
+    <select id="getAttentionPosts" resultType="com.city.forum.model.vo.Postvo">
+        select u.user_id,u.user_nickname,u.user_avatar,p.post_id,p.post_time,p.post_content,p.post_count,p.post_comment,p.file_type,p.file_href
+        from post p inner join user u on p.user_id = u.user_id
+                    inner join attention a on p.user_id = a.attention_id
+                    where a.attention_status = 1 and a.user_id = #{userId}
+        order by p.post_time desc
+    </select>
+
+    <!--    获取我评论的帖子-->
+    <select id="getPostsComment" resultType="com.city.forum.model.vo.Postvo">
+          select distinct u.user_id,u.user_nickname,u.user_avatar,
+          p.post_id,p.post_time,p.post_content,p.post_count,p.post_comment,p.file_type,p.file_href
+          from post p inner join user u
+          on p.user_id = u.user_id
+          INNER JOIN comment c on p.post_id = c.post_id
+          where c.user_id = #{userId}
+    </select>
+
+
+</mapper>

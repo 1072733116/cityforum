@@ -1,0 +1,41 @@
+#设置端口号
+server:
+  port: 8081
+
+#连接数据库
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/forum?characterEncoding=utf-8&useSSL=false&autoReconnect=true&rewriteBatchedStatements=true&serverTimezone=UTC
+      #    username: forum
+    username: root
+    password: "000310"
+  servlet:
+    multipart:
+      max-file-size: 100MB
+      max-request-size: 100MB
+
+#mybatis-plus
+mybatis-plus:
+  configuration:
+    map-underscore-to-camel-case: true
+  global-config:
+    db-config:
+      logic-delete-value: 0
+      logic-not-delete-value: 1
+  mapper-locations: classpath:mapper/*.xml
+
+#jwt秘钥
+security:
+  jwt:
+    secretKey: cityforu
+
+#文件上传
+file:
+#  文件映射路径
+  fileUrl: /pic/**
+#  文件真实路径
+  filePath: /tmp/pic/
+#  uploadFolder: "D://cityforumImage//"
+
+

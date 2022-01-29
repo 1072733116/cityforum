@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.city.forum.mapper.ResourceMapper">
+    <!--根据用户id获取权限集合-->
+    <select id="selectResoureIdsByUserId" resultType="java.lang.Integer">
+        SELECT
+            r.*
+        FROM
+            user_role ur
+            INNER JOIN role_resource rr ON ur.role_id = rr.role_id
+            INNER JOIN resource r ON rr.resource_id = r.resource_id
+        WHERE
+            ur.user_id = #{userId};
+    </select>
+
+    <!--批量新增权限资源-->
+    <insert id="insertResources">
+        insert into resource(resource_id, resource_path, resource_name, resource_type) values
+        <foreach collection="resources" separator="," item="resource">
+            (#{resource.resoure_id}, #{resource.resoure_path}, #{resource.resoure_name}, #{resource.resoure_type})
+        </foreach>
+    </insert>
+</mapper>

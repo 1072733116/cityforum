@@ -7,7 +7,6 @@ spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://localhost:3306/forum?characterEncoding=utf-8&useSSL=false&autoReconnect=true&rewriteBatchedStatements=true&serverTimezone=UTC
-      #    username: forum
     username: root
     password: "000310"
   servlet:
